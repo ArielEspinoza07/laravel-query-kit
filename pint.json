@@ -1,0 +1,6 @@
+{
+  "preset": "laravel",
+  "linesBetweenClassConstants": true,
+  "linesBetweenMethods": true,
+  "orderedImports": true
+}

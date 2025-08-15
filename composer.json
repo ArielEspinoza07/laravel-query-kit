@@ -1,0 +1,64 @@
+{
+  "name": "arielespinoza07/laravel-query-kit",
+  "description": "A Laravel toolkit to handle for handling queries via a criteria pattern.",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "query",
+    "laravel-query-kit",
+    "filter",
+    "sort",
+    "pagination",
+    "relations",
+    "resource",
+    "criteria"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ariel Espinoza",
+      "email": "arielespinoza46@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/console": "^11.0|^12.0",
+    "illuminate/contracts": "^11.0|^12.0",
+    "illuminate/database": "^11.0|^12.0",
+    "illuminate/http": "^11.0|^12.0",
+    "illuminate/support": "^11.0|^12.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.5.0",
+    "mockery/mockery": "^1.6",
+    "orchestra/testbench": "^10.4.0",
+    "pestphp/pest": "^3.8.2",
+    "laravel/pint": "^1.24.0",
+    "pestphp/pest-plugin-laravel": "^3.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "LaravelQueryKit\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelQueryKit\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LaravelQueryKit\\Providers\\QueryKitServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
