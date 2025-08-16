@@ -53,6 +53,18 @@
       ]
     }
   },
+  "scripts": {
+    "lint:fix": "pint",
+    "test:unit": "pest",
+    "test:unit:parallel": "pest --parallel",
+    "test:lint": "pint --test",
+    "test:static": "phpstan analyse",
+    "test": [
+      "@test:lint",
+      "@test:static",
+      "@test:unit:parallel"
+    ]
+  },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "config": {
