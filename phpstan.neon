@@ -1,16 +1,11 @@
 includes:
-  - ./vendor/nunomaduro/larastan/extension.neon
+  - ./vendor/larastan/larastan/extension.neon
+  - vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
-  level: 6
   paths:
     - src
-    - tests
-  excludePaths:
-    - tests/Fixtures
-  checkMissingIterableValueType: false
-  checkGenericClassInNonGenericObjectType: false
-  inferPrivatePropertyTypeFromConstructor: true
-  reportUnmatchedIgnoredErrors: false
-  ignoreErrors:
-    - '#^Method Illuminate\\Support\\Collection::.* not found\\.$#'
+
+  level: 5
+
+#  excludePaths:
