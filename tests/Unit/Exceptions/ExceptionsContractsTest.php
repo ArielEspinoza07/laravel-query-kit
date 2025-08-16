@@ -33,7 +33,7 @@ it('inherits from the expected parent and base Exception', function (string $fqc
 
 it('propagates message, code and previous', function (string $fqcn) {
     $prev = new RuntimeException('prev');
-    $ex   = new $fqcn('boom', 123, $prev);
+    $ex = new $fqcn('boom', 123, $prev);
 
     expect($ex->getMessage())->toBe('boom')
         ->and($ex->getCode())->toBe(123)
