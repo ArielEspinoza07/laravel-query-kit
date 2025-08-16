@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Database\Query\Builder;
+use LaravelQueryKit\Contracts\CriteriaInterface;
+
+final class {{ class }}Criteria implements CriteriaInterface
+{
+    public function __construct() {}
+
+    public function apply(Builder $builder): Builder
+    {
+        //
+    }
+}
