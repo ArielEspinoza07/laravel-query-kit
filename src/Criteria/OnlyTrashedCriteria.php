@@ -11,8 +11,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelQueryKit\Contracts\CriteriaInterface;
 use LaravelQueryKit\Exceptions\CriteriaException;
 
-final class OnlyTrashedCriteria implements CriteriaInterface
+final readonly class OnlyTrashedCriteria implements CriteriaInterface
 {
+    public function __construct(private bool $active = false) {}
+
     /**
      * @throws CriteriaException
      */
@@ -31,8 +33,12 @@ final class OnlyTrashedCriteria implements CriteriaInterface
             ));
         }
 
-        /** @phpstan-ignore-next-line */
-        return $builder->onlyTrashed();
+        if ($this->active) {
+            /** @phpstan-ignore-next-line */
+            return $builder->onlyTrashed();
+        }
+
+        return $builder;
     }
 
     private function useSoftDeleteTrait(Model $model): bool

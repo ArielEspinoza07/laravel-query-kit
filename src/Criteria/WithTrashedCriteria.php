@@ -13,6 +13,8 @@ use LaravelQueryKit\Exceptions\CriteriaException;
 
 final class WithTrashedCriteria implements CriteriaInterface
 {
+    public function __construct(private bool $active = false) {}
+
     /**
      * @throws CriteriaException
      */
@@ -31,8 +33,12 @@ final class WithTrashedCriteria implements CriteriaInterface
             ));
         }
 
-        /** @phpstan-ignore-next-line */
-        return $builder->withTrashed();
+        if ($this->active) {
+            /** @phpstan-ignore-next-line */
+            return $builder->withTrashed();
+        }
+
+        return $builder;
     }
 
     private function useSoftDeleteTrait(Model $model): bool

@@ -37,7 +37,7 @@ it('calls withTrashed when model uses SoftDeletes', function () {
     $eloquent->shouldReceive('getModel')->andReturn($model);
     $eloquent->shouldReceive('withTrashed')->once()->andReturnSelf();
 
-    $criteria = new WithTrashedCriteria;
+    $criteria = new WithTrashedCriteria(active: true);
     $result = $criteria->apply($eloquent);
 
     expect($result)->toBe($eloquent);
