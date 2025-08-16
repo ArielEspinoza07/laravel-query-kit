@@ -36,7 +36,7 @@ it('apply builds existence subquery and orders by alias', function () {
     $related->shouldReceive('newQuery')
         ->andReturn(Mockery::mock(\Illuminate\Database\Eloquent\Builder::class));
     $related->shouldReceive('getTable')      // <- agrega esta expectativa
-    ->atLeast()->once()
+        ->atLeast()->once()
         ->andReturn('targets');
 
     // HasManyThrough
@@ -50,10 +50,10 @@ it('apply builds existence subquery and orders by alias', function () {
     $applier = new \LaravelQueryKit\Criteria\Sort\HasManyThroughOrderByCriteria;
 
     $res = $applier->apply(
-        builder:   $parent,
-        model:     Mockery::mock(\Illuminate\Database\Eloquent\Model::class),
-        relation:  $rel,
-        column:    'name',
+        builder: $parent,
+        model: Mockery::mock(\Illuminate\Database\Eloquent\Model::class),
+        relation: $rel,
+        column: 'name',
         direction: 'desc'
     );
 
