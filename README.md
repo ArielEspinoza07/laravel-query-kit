@@ -22,8 +22,9 @@
 ```
 ├── config/
 ├── src/
-|   ├── Commands/
-|   |   └── stubs/
+|   ├── Console/
+|   |   └── Commands/
+|   |       └── stubs/
 |   ├── Contracts/
 |   ├── Criteria/
 |   |   └── Sort/
@@ -54,17 +55,14 @@ composer require arielespinoza07/laravel-query-kit
 
 ---
 
-## ⚙️ Configuration
-
-
----
-
 ## 🚀 Usage
 
 1. Code example
 
 ```php
 use App\Models\User;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserCollection;
 use LaravelQueryKit\Criteria\WhereFieldCriteria;
 use LaravelQueryKit\Criteria\SortCriteria;
 use LaravelQueryKit\Support\Facades\QueryBuilder;
@@ -91,7 +89,7 @@ $response = $query->toPaginated();
 $response = $query->toJsonResource(USerResource::class);
 
 /** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
-$response = $query->toResourceCollection();
+$response = $query->toResourceCollection(UserCollection::class);
 
 ```
 
