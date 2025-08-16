@@ -67,7 +67,7 @@ composer require arielespinoza07/laravel-query-kit
 use App\Models\User;
 use LaravelQueryKit\Criteria\WhereFieldCriteria;
 use LaravelQueryKit\Criteria\SortCriteria;
-use LaravelQueryKit\QueryBuilder;
+use LaravelQueryKit\Support\Facades\QueryBuilder;
 
 $query = QueryBuilder::for(new User)
     ->withCriteria(
