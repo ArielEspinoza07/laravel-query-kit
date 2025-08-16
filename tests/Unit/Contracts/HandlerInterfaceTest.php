@@ -9,10 +9,9 @@ it('defines HandlerInterface::create(QueryService): self as static', function ()
     expect(interface_exists(HandlerInterface::class))->toBeTrue();
 
     $ref = new ReflectionClass(HandlerInterface::class);
-    $m   = $ref->getMethod('create');
+    $m = $ref->getMethod('create');
 
     expect($m->isStatic())->toBeTrue();
-
 
     $ret = $m->getReturnType();
     expect($ret)->toBeInstanceOf(ReflectionNamedType::class)

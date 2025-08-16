@@ -13,7 +13,6 @@ it('CollectionHandlerInterface extends HandlerInterface and defines get(): Colle
 
     expect($ref->implementsInterface(HandlerInterface::class))->toBeTrue();
 
-
     $m = $ref->getMethod('get');
     expect($m->isStatic())->toBeFalse()
         ->and($m->getNumberOfParameters())->toBe(0);

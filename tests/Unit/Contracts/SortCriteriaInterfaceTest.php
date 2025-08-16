@@ -11,7 +11,7 @@ it('SortCriteriaInterface defines apply(Builder, Model, Relation, string, string
     expect(interface_exists(SortCriteriaInterface::class))->toBeTrue();
 
     $ref = new ReflectionClass(SortCriteriaInterface::class);
-    $m   = $ref->getMethod('apply');
+    $m = $ref->getMethod('apply');
 
     expect($m->isStatic())->toBeFalse();
 
@@ -43,7 +43,7 @@ it('SortCriteriaInterface defines apply(Builder, Model, Relation, string, string
 
 it('SortCriteriaInterface defines supports(Relation): bool', function () {
     $ref = new ReflectionClass(SortCriteriaInterface::class);
-    $m   = $ref->getMethod('supports');
+    $m = $ref->getMethod('supports');
 
     expect($m->isStatic())->toBeFalse();
 
