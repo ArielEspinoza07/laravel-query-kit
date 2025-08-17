@@ -1,26 +1,43 @@
 # Laravel Query Kit
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
+[![Latest on Packagist](https://img.shields.io/packagist/v/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
 [![Tests](https://img.shields.io/github/actions/workflow/status/arielespinoza07/laravel-query-kit/run-tests.yml?label=tests)](https://github.com/arielespinoza07/laravel-query-kit/actions)
-[![Total Downloads](https://img.shields.io/packagist/dt/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
+[![Downloads](https://img.shields.io/packagist/dt/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
 
-> **Requires [PHP 8.2+](https://php.net/releases/)**
-
----
 
 **Laravel Query Kit** is a powerful toolkit for handling queries via criteria pattern. It's built with SOLID principles and easy to extend.
 
 ---
 
+## 🧱 Requirements
+
+- PHP ^8.2
+- Laravel ^11.0
+
+---
+
+## 📦 Installation
+
+```bash
+composer require arielespinoza07/laravel-query-kit
+```
+
+---
+
 ## ✨ Features
 
+- Typed criteria: filters, search, pagination, sorting, soft deletes, and dates
+- Filter groups with operators (`=`, `like`, `between`, `in`, `not in`, etc.) and `AND`/`OR` logic
+- Sorts for relationships (`belongsTo`, `hasOne`, `hasMany`, etc.), with dedicated handlers
+- Central Facade/Service for composing and executing (builder, collection, pagination, resources)
+- Input pre-validation (avoids invalid queries before touching the database)
+- Extensible architecture through interfaces (add your own filters and sorts)
 
 ---
 
 ## 📁 Directory Structure
 
 ```
-├── config/
 ├── src/
 |   ├── Console/
 |   |   └── Commands/
@@ -40,24 +57,7 @@
 
 ---
 
-## 🧱 Requirements
-
-- PHP ^8.2
-- Laravel ^11.0
-
----
-
-## 📦 Installation
-
-```bash
-composer require arielespinoza07/laravel-query-kit
-```
-
----
-
-## 🚀 Usage
-
-Code example
+## 🚀 Quickstart
 
 ```php
 use App\Models\User;
@@ -128,6 +128,14 @@ $response = $query->withPagination(page: 1, perPage: 10)
 
 ---
 
+## Artisan Generators
+
+```bash
+php artisan make:criteria Billing/OrderTotal
+```
+
+---
+
 ## 🧪 Testing
 
 ```bash
@@ -139,6 +147,18 @@ composer test
 ## 🤝 Contributing
 
 See [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+---
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for details.
+
+---
+
+## Security
+
+Report vulnerabilities by email or private issues.
 
 ---
 
