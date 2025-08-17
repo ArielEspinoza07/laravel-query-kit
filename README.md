@@ -130,8 +130,10 @@ $response = $query->withPagination(page: 1, perPage: 10)
 
 ## Artisan Generators
 
+1. Create a new criteria class `WeekOrderTotalCriteria`
+
 ```bash
-php artisan make:criteria Billing/OrderTotal
+php artisan make:criteria Billing/WeekOrderTotalCriteria
 ```
 
 ```php
@@ -144,7 +146,7 @@ namespace App\Criteria\Billing;
 use Illuminate\Contracts\Database\Query\Builder;
 use LaravelQueryKit\Contracts\CriteriaInterface;
 
-final readonly class OrderTotalCriteria implements CriteriaInterface
+final readonly class WeekOrderTotalCriteria implements CriteriaInterface
 {
     public function __construct() {}
 
@@ -155,6 +157,45 @@ final readonly class OrderTotalCriteria implements CriteriaInterface
 }
 ```
 
+2. Create a new custom sort order criteria, using a relationship `MonthBillingOrderByCriteria`
+
+```bash
+php artisan make:criteria Sort/MonthBilling -s
+```
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Criteria\Sort;
+
+use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use LaravelQueryKit\Contracts\SortCriteriaInterface;
+
+final readonly class MonthBillingOrderByCriteria implements SortCriteriaInterface
+{
+    public function __construct() {}
+
+    /**
+     * {@inheritDoc}
+     */
+    public function apply(Builder $builder, Model $model, Relation $relation, string $column, string $direction): Builder
+    {
+        //
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports(Relation $relation): bool
+    {
+        //
+    }
+}
+```
 ---
 
 ## 🧪 Testing
