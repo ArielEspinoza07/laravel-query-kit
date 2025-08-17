@@ -70,7 +70,7 @@ use LaravelQueryKit\Support\Facades\QueryBuilder;
 $query = QueryBuilder::for(new User)
     ->withCriteria(
         new WhereFieldCriteria('email', 'like', '%john.doe%'),
-        new SortCriteria(new User, 'created_at', 'desc')->withDefaultSorts()
+        new SortCriteria('created_at', 'desc')->withDefaultSorts()
     );
 ```
 
@@ -132,6 +132,27 @@ $response = $query->withPagination(page: 1, perPage: 10)
 
 ```bash
 php artisan make:criteria Billing/OrderTotal
+```
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Criteria\Billing;
+
+use Illuminate\Contracts\Database\Query\Builder;
+use LaravelQueryKit\Contracts\CriteriaInterface;
+
+final readonly class OrderTotalCriteria implements CriteriaInterface
+{
+    public function __construct() {}
+
+    public function apply(Builder $builder): Builder
+    {
+        //
+    }
+}
 ```
 
 ---
