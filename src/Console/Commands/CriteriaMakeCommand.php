@@ -18,10 +18,10 @@ final class CriteriaMakeCommand extends GeneratorCommand
     protected function getStub(): string
     {
         if ($this->option('sort')) {
-            return $this->resolveStubPath('./stubs/criteria-sort.stub');
+            return $this->resolveStubPath('/stubs/criteria-sort.stub');
         }
 
-        return $this->resolveStubPath('./stubs/criteria.stub');
+        return $this->resolveStubPath('/stubs/criteria.stub');
     }
 
     protected function resolveStubPath(string $stub): string
