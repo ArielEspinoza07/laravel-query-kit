@@ -1,16 +1,8 @@
 name: Static Analysis
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '**/*.php'
-      - 'composer.json'
-      - 'phpstan.neon'
-      - 'pint.json'
-      - '.github/workflows/static.yml'
-  workflow_dispatch:
+  push:
+    branches: [ 'feature/*', 'fix/*']
 
 jobs:
   phpstan:

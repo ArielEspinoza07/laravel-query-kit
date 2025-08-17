@@ -1,16 +1,8 @@
 name: Formats Checks
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '**/*.php'
-      - 'composer.json'
-      - 'phpstan.neon'
-      - 'pint.json'
-      - '.github/workflows/lint.yml'
-  workflow_dispatch:
+  push:
+    branches: [ 'feature/*', 'fix/*']
 
 jobs:
   pint:

@@ -1,15 +1,9 @@
 name: Tests
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    paths:
-      - '**/*.php'
-      - 'composer.json'
-      - 'composer.lock'
-      - '.github/workflows/run-tests.yml'
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   tests:
