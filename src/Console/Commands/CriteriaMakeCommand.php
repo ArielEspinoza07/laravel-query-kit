@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 final class CriteriaMakeCommand extends GeneratorCommand
 {
-    protected $signature = 'make:criteria {name : The criteria class name} {--f|force : Overwrite if the file exists}';
+    protected $signature = 'make:criteria {name : The criteria class name} {--f|force : Overwrite if the file exists} {--s|sort : Create sort criteria}';
 
     protected $description = 'Create a new criteria';
 
@@ -17,6 +17,10 @@ final class CriteriaMakeCommand extends GeneratorCommand
 
     protected function getStub(): string
     {
+        if ($this->option('sort')) {
+            return $this->resolveStubPath('./stubs/criteria-sort.stub');
+        }
+
         return $this->resolveStubPath('./stubs/criteria.stub');
     }
 
@@ -41,6 +45,7 @@ final class CriteriaMakeCommand extends GeneratorCommand
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the criteria already exists'],
+            ['sort', 's', InputOption::VALUE_OPTIONAL, 'Create criteria for sorting by a relationship'],
         ];
     }
 }

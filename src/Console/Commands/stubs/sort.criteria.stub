@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use LaravelQueryKit\Contracts\SortCriteriaInterface;
+
+final class {{ class }}OrderByCriteria implements SortCriteriaInterface
+{
+    public function __construct() {}
+
+    /**
+     * {@inheritDoc}
+     */
+    public function apply(Builder $builder, Model $model, Relation $relation, string $column, string $direction): Builder
+    {
+        //
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supports(Relation $relation): bool
+    {
+        //
+    }
+}
