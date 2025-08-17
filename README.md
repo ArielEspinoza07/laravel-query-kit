@@ -63,9 +63,9 @@ Code example
 use App\Models\User;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
-use LaravelQueryKit\Criteria\WhereFieldCriteria;
-use LaravelQueryKit\Criteria\SortCriteria;
-use LaravelQueryKit\Support\Facades\QueryBuilder;
+use ArielEspinoza07\LaravelQueryKit\Criteria\WhereFieldCriteria;
+use ArielEspinoza07\LaravelQueryKit\Criteria\SortCriteria;
+use ArielEspinoza07\LaravelQueryKit\Support\Facades\QueryBuilder;
 
 $query = QueryBuilder::for(new User)
     ->withCriteria(
