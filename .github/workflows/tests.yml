@@ -51,6 +51,7 @@ jobs:
           fi
 
       - name: Install dependencies (lock-resolve for Laravel ${{ matrix.laravel }})
+        shell: bash
         run: |
           composer update --no-interaction --no-progress $COMPOSER_FLAGS \
             --with="illuminate/console:^${{ matrix.laravel }}" \
