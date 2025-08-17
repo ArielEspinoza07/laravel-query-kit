@@ -21,16 +21,17 @@ We welcome all contributions that help improve this package.
 git checkout -b feature/my-feature
 ```
 3. Make your changes (follow SOLID, DRY, and clean code principles).
-4. Run tests and linters:
+4. Run tests and linters (Some available commands):
 ```bash
-composer test
-composer analyse
-composer lint
-
+composer test:unit
+composer test:unit:parallel
+composer test:static
+composer test:lint
+composer test (exec unit:parallel, static, lint)
 ```
 5. Commit with a clear message:
 ```bash
-git commit -m "feat(criteria): add sort, relation MorphTo"
+git commit -m "feat(criteria): add is admin criteria"
 ```
 6. Push and open a Pull Request.
    Include a description of your changes and why they improve the package.
