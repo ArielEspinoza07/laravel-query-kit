@@ -52,9 +52,3 @@ it('fallback: applies whereAny when is available', function () {
 
     expect($result)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

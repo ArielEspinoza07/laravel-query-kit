@@ -37,9 +37,3 @@ it('apply uses leftJoin/orderBy and returns builder', function () {
 
     expect($res)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

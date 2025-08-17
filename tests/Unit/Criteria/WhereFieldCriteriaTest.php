@@ -23,9 +23,3 @@ it('applies where(column, operator, value, boolean) and returns builder', functi
 
     expect($result)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

@@ -40,9 +40,3 @@ it('apply uses pivot+related joins and orderBy, returning builder', function () 
 
     expect($res)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

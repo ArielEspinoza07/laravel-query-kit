@@ -9,12 +9,6 @@ use LaravelQueryKit\Contracts\CriteriaInterface;
 use LaravelQueryKit\Exceptions\QueryServiceException;
 use LaravelQueryKit\Service\QueryService;
 
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});
-
 it('is final and has a private constructor', function () {
     $ref = new ReflectionClass(QueryService::class);
 

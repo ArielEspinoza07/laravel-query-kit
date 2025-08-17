@@ -44,9 +44,3 @@ it('applyWithoutRelation orders by column/direction and returns builder', functi
 
     expect($res)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

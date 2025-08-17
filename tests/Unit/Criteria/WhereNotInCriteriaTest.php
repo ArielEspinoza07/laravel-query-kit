@@ -22,9 +22,3 @@ it('applies whereNotIn(column, values, boolean) and returns builder', function (
 
     expect($result)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

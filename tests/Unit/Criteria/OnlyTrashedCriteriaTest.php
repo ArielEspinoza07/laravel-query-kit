@@ -42,9 +42,3 @@ it('calls onlyTrashed when model uses SoftDeletes', function () {
 
     expect($result)->toBe($eloquent);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

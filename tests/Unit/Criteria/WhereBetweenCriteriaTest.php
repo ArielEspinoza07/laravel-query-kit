@@ -22,9 +22,3 @@ it('applies whereBetween(column, [min, max], boolean) and returns builder', func
 
     expect($result)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

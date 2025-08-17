@@ -43,9 +43,3 @@ it('apply builds subquery and orders by it', function () {
 
     expect($res)->toBe($qb);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

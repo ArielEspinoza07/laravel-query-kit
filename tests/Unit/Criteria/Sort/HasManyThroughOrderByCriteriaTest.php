@@ -59,9 +59,3 @@ it('apply builds existence subquery and orders by alias', function () {
 
     expect($res)->toBe($parent);
 });
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});

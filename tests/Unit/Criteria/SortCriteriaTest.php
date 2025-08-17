@@ -155,9 +155,3 @@ it('fails when no applier supports the resolved relation', function () {
 
     $criterion->apply($qb);
 })->throws(SortCriteriaException::class, 'Unsupported relation type');
-
-afterEach(function () {
-    if (class_exists(Mockery::class)) {
-        Mockery::close();
-    }
-});
