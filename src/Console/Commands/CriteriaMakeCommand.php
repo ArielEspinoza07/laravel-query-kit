@@ -11,7 +11,7 @@ final class CriteriaMakeCommand extends GeneratorCommand
 {
     protected $signature = 'make:criteria {name : The criteria class name} {--f|force : Overwrite if the file exists} {--s|sort : Create sort criteria}';
 
-    protected $description = 'Create a new criteria';
+    protected $description = 'Create a new criteria class';
 
     protected $type = 'Criteria';
 
@@ -26,8 +26,10 @@ final class CriteriaMakeCommand extends GeneratorCommand
 
     protected function resolveStubPath(string $stub): string
     {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
+        $custom = $this->laravel->basePath(trim($stub, '/'));
+
+        return file_exists($custom)
+            ? $custom
             : __DIR__.$stub;
     }
 
