@@ -61,7 +61,10 @@ final class CriteriaMakeCommand extends GeneratorCommand
         $qualified = parent::qualifyClass($name);
 
         if (! str_ends_with($qualified, 'Criteria')) {
-            $qualified .= 'Criteria';
+            $qualified .= match (true) {
+                $this->option('sort') => 'OrderByCriteria',
+                default => 'Criteria',
+            };
         }
 
         return $qualified;
