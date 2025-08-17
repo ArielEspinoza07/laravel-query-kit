@@ -6,12 +6,17 @@ namespace LaravelQueryKit\Contracts;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/**
+ * Handler that wraps a result set (collection or paginator) into a ResourceCollection.
+ */
 interface ResourceCollectionHandlerInterface extends HandlerInterface
 {
     /**
-     * Transforms query results using a Laravel resource.
+     * Execute the query and wrap the result set into the given ResourceCollection class.
+     * Useful for "index" endpoints returning multiple items, optionally paginated.
      *
-     * @param  class-string<ResourceCollection>  $resourceClass  A resource instance (e.g., UserCollection::class)
+     * @param  class-string<ResourceCollection>  $resourceClass  Fully qualified resource-collection class name.
+     * @return ResourceCollection The resource collection representing the result set.
      */
     public function get(string $resourceClass): ResourceCollection;
 }
