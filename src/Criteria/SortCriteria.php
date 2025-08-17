@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use LaravelQueryKit\Contracts\CriteriaInterface;
+use LaravelQueryKit\Contracts\ModelAwareCriteriaInterface;
 use LaravelQueryKit\Contracts\SortCriteriaInterface;
 use LaravelQueryKit\Criteria\Sort\BelongsToManyOrderByCriteria;
 use LaravelQueryKit\Criteria\Sort\BelongsToOrderByCriteria;
@@ -19,24 +19,27 @@ use LaravelQueryKit\Criteria\Sort\HasOneOrManyOrderByCriteria;
 use LaravelQueryKit\Criteria\Sort\OrderByCriteria;
 use LaravelQueryKit\Exceptions\SortCriteriaException;
 
-final readonly class SortCriteria implements CriteriaInterface
+final readonly class SortCriteria implements ModelAwareCriteriaInterface
 {
+    private ?Model $model;
+
     /**
      * @param  array<SortCriteriaInterface>  $sorts
      *
      * @throws Exception
      */
     public function __construct(
-        private Model $model,
         private string $column,
         private string $direction = 'asc',
         private array $sorts = [],
+        ?Model $model = null,
     ) {
         if (! in_array($direction, ['asc', 'desc'])) {
             throw new SortCriteriaException(
                 message: sprintf('Invalid direction %s', $direction),
             );
         }
+        $this->model = $model;
     }
 
     /**
@@ -99,10 +102,10 @@ final readonly class SortCriteria implements CriteriaInterface
         $sorts[] = $sort;
 
         return new self(
-            model: $this->model,
             column: $this->column,
             direction: $this->direction,
             sorts: $sorts,
+            model: $this->model,
         );
     }
 
@@ -114,10 +117,10 @@ final readonly class SortCriteria implements CriteriaInterface
     public function setSorts(array $sorts): self
     {
         return new self(
-            model: $this->model,
             column: $this->column,
             direction: $this->direction,
             sorts: $sorts,
+            model: $this->model,
         );
     }
 
@@ -130,10 +133,10 @@ final readonly class SortCriteria implements CriteriaInterface
         array_push($sorts, ...$sort);
 
         return new self(
-            model: $this->model,
             column: $this->column,
             direction: $this->direction,
             sorts: $sorts,
+            model: $this->model,
         );
     }
 
@@ -143,7 +146,6 @@ final readonly class SortCriteria implements CriteriaInterface
     public function withDefaultSorts(): self
     {
         return new self(
-            model: $this->model,
             column: $this->column,
             direction: $this->direction,
             sorts: [
@@ -155,6 +157,20 @@ final readonly class SortCriteria implements CriteriaInterface
                 new HasOneOrderByCriteria,
                 new HasOneOrManyOrderByCriteria,
             ],
+            model: $this->model,
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function withModel(Model $model): self
+    {
+        return new self(
+            column: $this->column,
+            direction: $this->direction,
+            sorts: $this->sorts,
+            model: $model,
         );
     }
 
