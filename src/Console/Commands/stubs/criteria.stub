@@ -7,7 +7,7 @@ namespace {{ namespace }};
 use Illuminate\Contracts\Database\Query\Builder;
 use LaravelQueryKit\Contracts\CriteriaInterface;
 
-final class {{ class }}Criteria implements CriteriaInterface
+final readonly class {{ class }}Criteria implements CriteriaInterface
 {
     public function __construct() {}
 

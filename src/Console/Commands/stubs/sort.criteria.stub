@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use LaravelQueryKit\Contracts\SortCriteriaInterface;
 
-final class {{ class }}OrderByCriteria implements SortCriteriaInterface
+final readonly class {{ class }}OrderByCriteria implements SortCriteriaInterface
 {
     public function __construct() {}
 
