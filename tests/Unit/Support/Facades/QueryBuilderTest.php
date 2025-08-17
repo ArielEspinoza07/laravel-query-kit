@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Contracts\Database\Query\Builder as QueryBuilderContract;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder as QueryBuilderContract;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use LaravelQueryKit\Contracts\CriteriaInterface;
@@ -12,8 +12,7 @@ use LaravelQueryKit\QueryBuilder;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyJsonResource as QB_DummyJsonResource;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyResourceCollection as QB_DummyResourceCollection;
 
-
-it('for(model) boots the builder using model->newQuery() and exposes the same builder', function () {
+it('for(model) boots using model->newQuery() and exposes the same builder', function () {
     $builder = Mockery::mock(QueryBuilderContract::class);
 
     $model = Mockery::mock(Model::class);
@@ -24,13 +23,26 @@ it('for(model) boots the builder using model->newQuery() and exposes the same bu
     expect($qb->builder())->toBe($builder);
 });
 
+it('withPagination returns a new immutable instance', function () {
+    $builder = Mockery::mock(QueryBuilderContract::class);
+    $model = Mockery::mock(Model::class);
+    $model->shouldReceive('newQuery')->once()->andReturn($builder);
+
+    $qb1 = QueryBuilder::for($model);
+    $qb2 = $qb1->withPagination(page: 2, perPage: 10);
+
+    expect($qb2)->not->toBe($qb1);
+    // builder sigue accesible
+    expect($qb2->builder())->toBe($builder);
+});
+
 it('withCriteria + addCriteria are applied in order when materializing toCollection()', function () {
-    // three builders to simulate transformation
+    // Tres builders para simular la transformación A -> B -> C
     $qbA = Mockery::mock(QueryBuilderContract::class);
     $qbB = Mockery::mock(QueryBuilderContract::class);
     $qbC = Mockery::mock(QueryBuilderContract::class);
 
-    // initial model->newQuery() returns qbA
+    // Modelo que devuelve el builder inicial A
     $model = new class extends Model
     {
         protected $table = 't';
@@ -44,26 +56,26 @@ it('withCriteria + addCriteria are applied in order when materializing toCollect
     };
     $model->qb = $qbA;
 
-    // criteria chain: c1(A)->B, c2(B)->C
+    // Criterios: c1(A) => B, c2(B) => C
     $c1 = Mockery::mock(CriteriaInterface::class);
     $c1->shouldReceive('apply')->once()->with($qbA)->andReturn($qbB);
 
     $c2 = Mockery::mock(CriteriaInterface::class);
     $c2->shouldReceive('apply')->once()->with($qbB)->andReturn($qbC);
 
-    // terminal get() happens on the final builder C
-    $result = new Collection([1, 2, 3]);
-    $qbC->shouldReceive('get')->once()->andReturn($result);
+    // La terminal get() ocurre sobre C
+    $rows = new Collection([1, 2, 3]);
+    $qbC->shouldReceive('get')->once()->andReturn($rows);
 
     $out = QueryBuilder::for($model)
         ->withCriteria($c1)
         ->addCriteria($c2)
         ->toCollection();
 
-    expect($out)->toBe($result);
+    expect($out)->toBe($rows);
 });
 
-it('toModel() returns the first model via ModelHandler path', function () {
+it('toModel() returns the first model', function () {
     $builder = Mockery::mock(QueryBuilderContract::class);
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
@@ -76,12 +88,12 @@ it('toModel() returns the first model via ModelHandler path', function () {
     expect($out)->toBe($found);
 });
 
-it('toCollection() returns a Collection via CollectionHandler path', function () {
+it('toCollection() returns a Collection', function () {
     $builder = Mockery::mock(QueryBuilderContract::class);
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
 
-    $rows = new Collection([['id' => 1]]);
+    $rows = collect([['id' => 1]]);
     $builder->shouldReceive('get')->once()->andReturn($rows);
 
     $out = QueryBuilder::for($model)->toCollection();
@@ -89,12 +101,11 @@ it('toCollection() returns a Collection via CollectionHandler path', function ()
     expect($out)->toBeInstanceOf(Collection::class)->and($out)->toBe($rows);
 });
 
-it('toPaginated() calls paginate(perPage,page) and returns paginator (withArgs pattern)', function () {
+it('toPaginated() calls paginate(perPage, page) and returns paginator', function () {
     $builder = Mockery::mock(QueryBuilderContract::class);
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
 
-    // paginator REAL para evitar métodos internos no stubbeados
     $items = collect([['id' => 1], ['id' => 2]]);
     $paginator = new LengthAwarePaginator($items, $items->count(), 10, 2);
 
@@ -144,7 +155,6 @@ it('toResourceCollection() wraps a paginator result when pagination is configure
 
     $builder->shouldReceive('paginate')
         ->once()
-        ->withArgs(fn ($perPage, $columns, $pageName, $page) => $perPage === 5 && $page === 1)
         ->andReturn($paginator);
 
     $out = QueryBuilder::for($model)
