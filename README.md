@@ -57,7 +57,7 @@ composer require arielespinoza07/laravel-query-kit
 
 ## 🚀 Usage
 
-1. Code example
+Code example
 
 ```php
 use App\Models\User;
@@ -72,25 +72,58 @@ $query = QueryBuilder::for(new User)
         new WhereFieldCriteria('email', 'like', '%john.doe%'),
         new SortCriteria(new User, 'created_at', 'desc')->withDefaultSorts()
     );
+```
 
+1. Get the builder
+
+```php
 /** @var \Illuminate\Contracts\Database\Query\Builder $builder */
 $builder = $query->builder();
+```
 
+2. Get the model
+
+```php
 /** @var \Illuminate\Database\Eloquent\Model|null $response */
 $response = $query->toModel();
+```
 
+3. Execute criteria and get the response as a collection
+
+```php
 /** @var \Illuminate\Support\Collection $response */
 $response = $query->toCollection();
+```
 
+4. Execute criteria and get the response paginated
+
+```php
 /** @var \Illuminate\Pagination\LengthAwarePaginator $response */
-$response = $query->toPaginated();
+$response = $query->withPagination(page: 1, perPage: 10)
+    ->toPaginated();
+```
 
+5. Execute criteria and get the response as a resource (single model)
+
+```php
 /** @var \Illuminate\Http\Resources\JsonResource $response */
 $response = $query->toJsonResource(USerResource::class);
+```
 
+6. Execute criteria and get the response as a resource (collection)
+
+```php
 /** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
 $response = $query->toResourceCollection(UserCollection::class);
+```
 
+7. Execute criteria and get the response as a resource (collection paginated)
+
+```php
+
+/** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
+$response = $query->withPagination(page: 1, perPage: 10)
+    ->toResourceCollection(UserCollection::class);
 ```
 
 ---
