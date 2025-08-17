@@ -26,12 +26,12 @@ composer require arielespinoza07/laravel-query-kit
 
 ## ✨ Features
 
-- Typed criteria: filters, search, pagination, sorting, soft deletes, and dates
-- Filter groups with operators (`=`, `like`, `between`, `in`, `not in`, etc.) and `AND`/`OR` logic
-- Sorts for relationships (`belongsTo`, `hasOne`, `hasMany`, etc.), with dedicated handlers
-- Central Facade/Service for composing and executing (builder, collection, pagination, resources)
-- Input pre-validation (avoids invalid queries before touching the database)
-- Extensible architecture through interfaces (add your own filters and sorts)
+- ✅ Typed criteria: filters, search, pagination, sorting, soft deletes, and dates
+- 🎯 Filter groups with operators (`=`, `like`, `between`, `in`, `not in`, etc.) and `AND`/`OR` logic
+- 🔀 Sorts for relationships (`belongsTo`, `hasOne`, `hasMany`, etc.), with dedicated handlers
+- ⚡ Central Facade/Service for composing and executing (builder, collection, pagination, resources)
+- 🛡️ Input pre-validation (avoids invalid queries before touching the database)
+- 🧩 Extensible architecture through interfaces (add your own criteria for filter or sort)
 
 ---
 
@@ -61,8 +61,6 @@ composer require arielespinoza07/laravel-query-kit
 
 ```php
 use App\Models\User;
-use App\Http\Resources\UserResource;
-use App\Http\Resources\UserCollection;
 use LaravelQueryKit\Criteria\WhereFieldCriteria;
 use LaravelQueryKit\Criteria\SortCriteria;
 use LaravelQueryKit\Support\Facades\QueryBuilder;
@@ -106,6 +104,8 @@ $response = $query->withPagination(page: 1, perPage: 10)
 5. Execute and get the response as a resource (single model)
 
 ```php
+use App\Http\Resources\UserResource;
+
 /** @var \Illuminate\Http\Resources\JsonResource $response */
 $response = $query->toJsonResource(UserResource::class);
 ```
@@ -113,6 +113,8 @@ $response = $query->toJsonResource(UserResource::class);
 6. Execute and get the response as a resource (collection)
 
 ```php
+use App\Http\Resources\UserCollection;
+
 /** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
 $response = $query->toResourceCollection(UserCollection::class);
 ```
@@ -120,11 +122,24 @@ $response = $query->toResourceCollection(UserCollection::class);
 7. Execute and get the response as a resource (collection paginated)
 
 ```php
+use App\Http\Resources\UserCollection;
 
 /** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
 $response = $query->withPagination(page: 1, perPage: 10)
     ->toResourceCollection(UserCollection::class);
 ```
+
+---
+
+### 🔎 Methods & Handlers
+
+| Method                   | Handler                     |
+|--------------------------|-----------------------------|
+| `toModel()`              | `ModelHandler`              |
+| `toCollection()`         | `CollectionHandler`         |
+| `toPaginated()`          | `PaginatedHandler`          |
+| `toJsonResource()`       | `JsonResourceHandler`       |
+| `toResourceCollection()` | `ResourceCollectionHandler` |
 
 ---
 
@@ -157,7 +172,7 @@ final readonly class WeekOrderTotalCriteria implements CriteriaInterface
 }
 ```
 
-2. Create a new custom sort order criteria, using a relationship `MonthBillingOrderByCriteria`
+2. Create a new custom sort criteria, using a relationship `MonthBillingOrderByCriteria`
 
 ```bash
 php artisan make:criteria Sort/MonthBilling -s
