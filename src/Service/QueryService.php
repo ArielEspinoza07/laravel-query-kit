@@ -7,6 +7,7 @@ namespace LaravelQueryKit\Service;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use LaravelQueryKit\Contracts\CriteriaInterface;
+use LaravelQueryKit\Contracts\ModelAwareCriteriaInterface;
 use LaravelQueryKit\Exceptions\QueryServiceException;
 
 /**
@@ -113,6 +114,9 @@ final class QueryService
     {
         $this->ensureReady();
         foreach ($this->criteria as $criteria) {
+            if ($criteria instanceof ModelAwareCriteriaInterface) {
+                $criteria = $criteria->withModel($this->model);
+            }
             $this->builder = $criteria->apply(builder: $this->builder);
         }
     }
