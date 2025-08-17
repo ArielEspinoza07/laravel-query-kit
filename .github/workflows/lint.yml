@@ -50,4 +50,4 @@ jobs:
             --with="illuminate/support:^${{ matrix.laravel }}"
 
       - name: Pint (dry-run)
-        run: vendor/bin/pint --test
+        run: ./vendor/bin/pint --test

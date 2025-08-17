@@ -50,4 +50,4 @@ jobs:
             --with="illuminate/support:^${{ matrix.laravel }}"
 
       - name: PHPStan
-        run: vendor/bin/phpstan analyse
+        run: ./vendor/bin/phpstan analyse
