@@ -50,4 +50,20 @@ final class CriteriaMakeCommand extends GeneratorCommand
             ['sort', 's', InputOption::VALUE_OPTIONAL, 'Create criteria for sorting by a relationship'],
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return string
+     */
+    protected function qualifyClass($name)
+    {
+        $qualified = parent::qualifyClass($name);
+
+        if (! str_ends_with($qualified, 'Criteria')) {
+            $qualified .= 'Criteria';
+        }
+
+        return $qualified;
+    }
 }
