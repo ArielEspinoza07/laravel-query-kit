@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
 
 
-**Laravel Query Kit** is a powerful toolkit for handling queries via criteria pattern. It's built with SOLID principles and easy to extend.
+**Laravel Query Kit** is a powerful criteria-based query builder toolkit. It's built with SOLID principles and easy to extend.
 
 ---
 
