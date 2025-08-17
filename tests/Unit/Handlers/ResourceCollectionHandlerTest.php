@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Collection;
 use LaravelQueryKit\Contracts\CollectionHandlerInterface;
 use LaravelQueryKit\Contracts\PaginatedHandlerInterface;
 use LaravelQueryKit\Exceptions\HandlerException;
 use LaravelQueryKit\Handlers\ResourceCollectionHandler;
 use LaravelQueryKit\Service\QueryService;
-
-class DummyResourceCollection extends ResourceCollection
-{
-    public function toArray($request)
-    {
-        return ['data' => $this->collection];
-    }
-}
+use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyResourceCollection;
 
 it('throws HandlerException for non resource-collection class', function () {
     $builder = Mockery::mock(Builder::class);

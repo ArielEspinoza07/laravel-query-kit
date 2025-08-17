@@ -4,18 +4,10 @@ declare(strict_types=1);
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\JsonResource;
 use LaravelQueryKit\Exceptions\HandlerException;
 use LaravelQueryKit\Handlers\JsonResourceHandler;
 use LaravelQueryKit\Service\QueryService;
-
-class DummyJsonResource extends JsonResource
-{
-    public function toArray($request)
-    {
-        return ['data' => $this->resource];
-    }
-}
+use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyJsonResource;
 
 it('throws HandlerException for non-resource class', function () {
     $builder = Mockery::mock(Builder::class);

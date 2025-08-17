@@ -12,7 +12,6 @@ use LaravelQueryKit\QueryBuilder;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyJsonResource as QB_DummyJsonResource;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyResourceCollection as QB_DummyResourceCollection;
 
-
 it('for(model) boots the builder using model->newQuery() and exposes the same builder', function () {
     $builder = Mockery::mock(QueryBuilderContract::class);
 

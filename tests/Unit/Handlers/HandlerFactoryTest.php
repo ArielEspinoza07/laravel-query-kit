@@ -4,30 +4,15 @@ declare(strict_types=1);
 
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use LaravelQueryKit\Handlers\CollectionHandler;
 use LaravelQueryKit\Handlers\HandlerFactory;
 use LaravelQueryKit\Handlers\JsonResourceHandler;
 use LaravelQueryKit\Handlers\PaginatedHandler;
 use LaravelQueryKit\Handlers\ResourceCollectionHandler;
 use LaravelQueryKit\Service\QueryService;
+use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyJsonResource as HF_DummyJsonResource;
+use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyResourceCollection as HF_DummyResourceCollection;
 use LaravelQueryKit\ValueObjects\Pagination;
-
-class HF_DummyJsonResource extends JsonResource
-{
-    public function toArray($request)
-    {
-        return ['data' => $this->resource];
-    }
-}
-class HF_DummyResourceCollection extends ResourceCollection
-{
-    public function toArray($request)
-    {
-        return ['data' => $this->collection];
-    }
-}
 
 beforeEach(function () {
     $builder = Mockery::mock(Builder::class);
