@@ -41,6 +41,9 @@ it('stub compiles into a concrete class with correct namespace and class name', 
     );
 
     $tmpDir = sys_get_temp_dir().DIRECTORY_SEPARATOR.'lqk_tests';
+    if (is_dir($tmpDir)) {
+        rmdir($tmpDir);
+    }
     @mkdir($tmpDir, 0777, true);
 
     $tmpFile = $tmpDir.DIRECTORY_SEPARATOR.'OrderTotalCriteria.php';
@@ -64,4 +67,7 @@ it('stub compiles into a concrete class with correct namespace and class name', 
     $ret = $m->getReturnType();
     expect($ret)->toBeInstanceOf(ReflectionNamedType::class)
         ->and($ret->getName())->toBe(Builder::class);
+
+    unlink($tmpFile);
+    rmdir($tmpDir);
 });
