@@ -20,7 +20,7 @@ it('stub has strict types, placeholders and expected class skeleton', function (
         ->and($stub)->toContain('{{ class }}')
         ->and($stub)->toContain('use Illuminate\Contracts\Database\Query\Builder;')
         ->and($stub)->toContain('use LaravelQueryKit\Contracts\CriteriaInterface;')
-        ->and($stub)->toContain('final class {{ class }}Criteria implements CriteriaInterface')
+        ->and($stub)->toContain('final readonly class {{ class }} implements CriteriaInterface')
         ->and($stub)->toContain('public function apply(Builder $builder): Builder');
 });
 
@@ -33,7 +33,7 @@ it('stub compiles into a concrete class with correct namespace and class name', 
     $stub = file_get_contents($path);
 
     $ns = 'App\\Criteria';
-    $class = 'OrderTotal';
+    $class = 'OrderTotalCriteria';
     $output = str_replace(
         ['{{ namespace }}', '{{ class }}'],
         [$ns, $class],
@@ -46,12 +46,12 @@ it('stub compiles into a concrete class with correct namespace and class name', 
     }
     @mkdir($tmpDir, 0777, true);
 
-    $tmpFile = $tmpDir.DIRECTORY_SEPARATOR.'OrderTotalCriteria.php';
+    $tmpFile = $tmpDir.DIRECTORY_SEPARATOR."$class.php";
     file_put_contents($tmpFile, $output);
 
     require_once $tmpFile;
 
-    $fqcn = $ns.'\\'.$class.'Criteria';
+    $fqcn = $ns.'\\'.$class;
 
     expect(class_exists($fqcn))->toBeTrue()
         ->and(is_subclass_of($fqcn, CriteriaInterface::class))->toBeTrue();

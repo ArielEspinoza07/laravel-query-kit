@@ -27,7 +27,7 @@ it('has the expected description', function () {
     $ref = new ReflectionClass(CriteriaMakeCommand::class);
     $defaults = $ref->getDefaultProperties();
 
-    expect($defaults['description'])->toBe('Create a new criteria');
+    expect($defaults['description'])->toBe('Create a new criteria class');
 });
 
 it('has type set to Criteria', function () {

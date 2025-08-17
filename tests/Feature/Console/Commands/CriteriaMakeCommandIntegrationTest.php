@@ -26,11 +26,13 @@ it('artisan make:criteria generates the file from the stub and compiles correctl
 
     $code = file_get_contents($expectedPath);
 
+    $ns = null;
+    $cls = null;
     if (preg_match('/^namespace\s+([^;]+);/m', $code, $m)) {
         $ns = trim($m[1]);
     }
-    if (preg_match('/^\s*(final\s+|abstract\s+)?class\s+([A-Za-z_]\w*)\b/m', $code, $m)) {
-        $cls = $m[2];
+    if (preg_match('/^\s*(?:(?:final\s+|abstract\s+)?readonly\s+|final\s+|abstract\s+)?class\s+([A-Za-z_]\w*)\b/m', $code, $m)) {
+        $cls = $m[1];
     }
 
     expect($ns)->not()->toBeNull('The namespace could not be detected in the generated file')
@@ -73,7 +75,7 @@ it('allows overwriting with --force without errors', function () {
 
     $code = file_get_contents($pre);
     expect($code)->not->toContain('// dummy')
-        ->and($code)->toContain('final class DummyCriteria');
+        ->and($code)->toContain('final readonly class DummyCriteria');
 
     $fs->delete($pre);
     $criteriaDir = app_path('Criteria');
