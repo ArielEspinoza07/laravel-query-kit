@@ -107,7 +107,7 @@ $response = $query->withPagination(page: 1, perPage: 10)
 
 ```php
 /** @var \Illuminate\Http\Resources\JsonResource $response */
-$response = $query->toJsonResource(USerResource::class);
+$response = $query->toJsonResource(UserResource::class);
 ```
 
 6. Execute and get the response as a resource (collection)
