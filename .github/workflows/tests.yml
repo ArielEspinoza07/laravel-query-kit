@@ -44,7 +44,7 @@ jobs:
 
       - name: Configure stability
         run: |
-          if [ "${{ matrix.stability }}" = "prefer-lowest" ]; then
+          if [ "${{ matrix.dependency-version }}" = "prefer-lowest" ]; then
             echo "COMPOSER_FLAGS=--prefer-lowest --prefer-dist" >> $GITHUB_ENV
           else
             echo "COMPOSER_FLAGS=--prefer-dist" >> $GITHUB_ENV
