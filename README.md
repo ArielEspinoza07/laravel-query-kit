@@ -88,14 +88,14 @@ $builder = $query->builder();
 $response = $query->toModel();
 ```
 
-3. Execute criteria and get the response as a collection
+3. Execute and get the response as a collection
 
 ```php
 /** @var \Illuminate\Support\Collection $response */
 $response = $query->toCollection();
 ```
 
-4. Execute criteria and get the response paginated
+4. Execute and get the response paginated
 
 ```php
 /** @var \Illuminate\Pagination\LengthAwarePaginator $response */
@@ -103,21 +103,21 @@ $response = $query->withPagination(page: 1, perPage: 10)
     ->toPaginated();
 ```
 
-5. Execute criteria and get the response as a resource (single model)
+5. Execute and get the response as a resource (single model)
 
 ```php
 /** @var \Illuminate\Http\Resources\JsonResource $response */
 $response = $query->toJsonResource(USerResource::class);
 ```
 
-6. Execute criteria and get the response as a resource (collection)
+6. Execute and get the response as a resource (collection)
 
 ```php
 /** @var \Illuminate\Http\Resources\Json\ResourceCollection $response */
 $response = $query->toResourceCollection(UserCollection::class);
 ```
 
-7. Execute criteria and get the response as a resource (collection paginated)
+7. Execute and get the response as a resource (collection paginated)
 
 ```php
 
