@@ -18,7 +18,8 @@ final readonly class {{ class }} implements SortCriteriaInterface
      */
     public function apply(Builder $builder, Model $model, Relation $relation, string $column, string $direction): Builder
     {
-        //
+        // TODO: Implement apply() method.
+        return $builder;
     }
 
     /**
@@ -26,6 +27,7 @@ final readonly class {{ class }} implements SortCriteriaInterface
      */
     public function supports(Relation $relation): bool
     {
-        //
+        // TODO: Implement supports() method.
+        return true;
     }
 }
