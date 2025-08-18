@@ -29,9 +29,9 @@
     "illuminate/support": "^11.0|^12.0"
   },
   "require-dev": {
-    "larastan/larastan": "^3.5.0",
+    "larastan/larastan": "^3.6.0",
     "mockery/mockery": "^1.6",
-    "orchestra/testbench": "^10.4.0",
+    "orchestra/testbench": "^9.14.0|^10.4.0",
     "pestphp/pest": "^3.8.2",
     "laravel/pint": "^1.24.0",
     "pestphp/pest-plugin-laravel": "^3.2"
