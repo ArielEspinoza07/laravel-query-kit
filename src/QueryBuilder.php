@@ -27,6 +27,9 @@ use LaravelQueryKit\ValueObjects\Pagination;
  *
  * This class is immutable: configuration methods (e.g. withPagination/withCriteria)
  * return a new instance while keeping the underlying QueryService up to date.
+ *
+ * @property-read Pagination|null $pagination
+ * @property-read QueryService|null $service
  */
 final readonly class QueryBuilder
 {

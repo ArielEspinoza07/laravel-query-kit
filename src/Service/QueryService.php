@@ -22,9 +22,13 @@ use LaravelQueryKit\Exceptions\QueryServiceException;
  *   from Model::newQuery(), but it is exposed through the Query\Builder
  *   contract for portability.
  * - This service is stateful: calling {@see apply()} mutates the internal
- *   builder reference as each criterion returns its transformed builder.
+ *   builder reference as each criteria returns its transformed builder.
  *
  * @see CriteriaInterface
+ *
+ * @property-read Model|null $model
+ * @property Builder|null $builder
+ * @property array<CriteriaInterface> $criteria
  */
 final class QueryService
 {
@@ -87,7 +91,7 @@ final class QueryService
     }
 
     /**
-     * Append a single criterion to the current list.
+     * Append a single criteria to the current list.
      *
      * This mutates the service in-place and returns the same instance so you
      * can fluently chain calls.
@@ -104,7 +108,7 @@ final class QueryService
     /**
      * Apply the queued criteria to the underlying builder in insertion order.
      *
-     * Each criterion receives the current builder and must return a (possibly
+     * Each criteria receive the current builder and must return a (possibly
      * transformed) builder. The internal builder reference is updated after
      * each step. This method does not execute the query; it only composes it.
      *
