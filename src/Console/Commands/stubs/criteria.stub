@@ -13,6 +13,7 @@ final readonly class {{ class }} implements CriteriaInterface
 
     public function apply(Builder $builder): Builder
     {
-        //
+        // TODO: Implement apply() method.
+        return $builder;
     }
 }

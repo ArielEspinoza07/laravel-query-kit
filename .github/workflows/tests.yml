@@ -1,0 +1,65 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        php: [ '8.2', '8.3', '8.4' ]
+        laravel: [ '11', '12' ]
+        dependency-version: [ 'prefer-stable', 'prefer-lowest' ]
+
+    name: Tests PHP ${{ matrix.os }} - ${{ matrix.php }} · Laravel ${{ matrix.laravel }} · ${{ matrix.dependency-version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: PHP setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, json, ctype, openssl, pdo, pdo_sqlite, sqlite3, fileinfo
+          coverage: none
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        shell: bash
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Composer cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-os-${{ matrix.os }}-version-${{ matrix.dependency-version }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-os-${{ matrix.os }}-version-${{ matrix.dependency-version }}-composer-
+
+      - name: Configure stability
+        shell: bash
+        run: |
+          if [ "${{ matrix.dependency-version }}" = "prefer-lowest" ]; then
+            echo "COMPOSER_FLAGS=--prefer-lowest --prefer-dist" >> $GITHUB_ENV
+          else
+            echo "COMPOSER_FLAGS=--prefer-dist" >> $GITHUB_ENV
+          fi
+
+      - name: Install dependencies (lock-resolve for Laravel ${{ matrix.laravel }})
+        shell: bash
+        run: |
+          composer update --no-interaction --no-progress $COMPOSER_FLAGS \
+            --with="illuminate/console:^${{ matrix.laravel }}" \
+            --with="illuminate/contracts:^${{ matrix.laravel }}" \
+            --with="illuminate/database:^${{ matrix.laravel }}" \
+            --with="illuminate/http:^${{ matrix.laravel }}" \
+            --with="illuminate/support:^${{ matrix.laravel }}"
+
+      - name: Run tests (Pest)
+        run: ./vendor/bin/pest -q

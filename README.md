@@ -145,10 +145,10 @@ $response = $query->withPagination(page: 1, perPage: 10)
 
 ## Artisan Generators
 
-1. Create a new criteria class `WeekOrderTotalCriteria`
+1. Create a new criteria class `WeekOrdersCriteria`
 
 ```bash
-php artisan make:criteria Billing/WeekOrderTotalCriteria
+php artisan make:criteria WeekOrders
 ```
 
 ```php
@@ -159,15 +159,33 @@ declare(strict_types=1);
 namespace App\Criteria\Billing;
 
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 use LaravelQueryKit\Contracts\CriteriaInterface;
 
-final readonly class WeekOrderTotalCriteria implements CriteriaInterface
+final readonly class WeekOrdersCriteria implements CriteriaInterface
 {
-    public function __construct() {}
+    private Carbon $date;
+
+    public function __construct(
+        private string $column = 'created_at',
+        private string $boolean = 'and',
+        ?string $date = null,
+    ) {
+        $this->date = isset($date) ? Carbon::parse($date) : now();
+    }
 
     public function apply(Builder $builder): Builder
     {
-        //
+        $weekDays = [
+            $this->date->startOfWeek()->format('Y-m-d H:i:s'),
+            $this->date->endOfWeek()->format('Y-m-d H:i:s'),
+        ];
+
+        return $builder->whereBetween(
+            column: $this->column,
+            values: $weekDays,
+            boolean: $this->boolean,
+        );
     }
 }
 ```
@@ -199,7 +217,8 @@ final readonly class MonthBillingOrderByCriteria implements SortCriteriaInterfac
      */
     public function apply(Builder $builder, Model $model, Relation $relation, string $column, string $direction): Builder
     {
-        //
+        // TODO: Implement apply() method.
+        return $builder;
     }
 
     /**
@@ -207,7 +226,8 @@ final readonly class MonthBillingOrderByCriteria implements SortCriteriaInterfac
      */
     public function supports(Relation $relation): bool
     {
-        //
+        // TODO: Implement supports() method.
+        return true;
     }
 }
 ```
