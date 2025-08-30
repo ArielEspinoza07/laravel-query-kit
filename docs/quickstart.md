@@ -6,9 +6,9 @@ Example usage with a `User` model and criteria.
 use App\Models\User;
 use LaravelQueryKit\Criteria\WhereFieldCriteria;
 use LaravelQueryKit\Criteria\SortCriteria;
-use LaravelQueryKit\Support\Facades\QueryBuilder;
+use LaravelQueryKit\Support\Facades\QueryKitBuilder;
 
-$query = QueryBuilder::for(new User)
+$query = QueryKitBuilder::for(new User)
     ->withCriteria(
         new WhereFieldCriteria('email', 'like', '%john.doe%'),
         new SortCriteria('created_at', 'desc')->withDefaultSorts()
