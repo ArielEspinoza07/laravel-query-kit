@@ -52,5 +52,3 @@
 - feat: add contracts and tests
 - chore: update phpstan.neon
 - chore: update readme
-
-
