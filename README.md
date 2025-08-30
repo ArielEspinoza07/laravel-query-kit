@@ -1,7 +1,7 @@
 # Laravel Query Kit
 
 [![Latest on Packagist](https://img.shields.io/packagist/v/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
-[![Tests](https://img.shields.io/github/actions/workflow/status/arielespinoza07/laravel-query-kit/run-tests.yml?label=tests)](https://github.com/arielespinoza07/laravel-query-kit/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/arielespinoza07/laravel-query-kit/tests.yml?label=tests)](https://github.com/arielespinoza07/laravel-query-kit/actions)
 [![Downloads](https://img.shields.io/packagist/dt/arielespinoza07/laravel-query-kit.svg?style=flat-square)](https://packagist.org/packages/arielespinoza07/laravel-query-kit)
 
 

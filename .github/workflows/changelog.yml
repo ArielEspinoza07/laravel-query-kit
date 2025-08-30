@@ -1,0 +1,31 @@
+name: 📖 Generate Full Changelog
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # ⚠️ necessary to access all the tags
+
+      - name: 🕵️ Check .github/scripts directory
+        run: ls -la .github/scripts
+
+      - name: 💪 Make script executable
+        run: chmod +x .github/scripts/generate-full-changelog.sh
+
+      - name: 📝 Generate full changelog
+        run: bash .github/scripts/generate-full-changelog.sh
+
+      - name: Commit updated changelog
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add CHANGELOG.md
+          git commit -m "docs(changelog): regenerate full changelog" || echo "No changes to commit"
+          git push
