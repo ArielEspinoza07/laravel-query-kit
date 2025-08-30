@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Http\Resources\Json\ResourceCollection toResourceCollection(string $resource)
  * @method static \Illuminate\Http\Resources\Json\JsonResource toJsonResource(string $resource)
  */
-final class QueryBuilder extends Facade
+final class QueryKitBuilder extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

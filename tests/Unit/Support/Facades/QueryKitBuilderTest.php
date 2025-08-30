@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use LaravelQueryKit\Contracts\CriteriaInterface;
 use LaravelQueryKit\Exceptions\QueryBuilderException;
-use LaravelQueryKit\QueryBuilder;
+use LaravelQueryKit\Support\Facades\QueryKitBuilder;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyJsonResource as QB_DummyJsonResource;
 use LaravelQueryKit\Tests\Stubs\Http\Resources\DummyResourceCollection as QB_DummyResourceCollection;
 
@@ -18,7 +18,7 @@ it('for(model) boots using model->newQuery() and exposes the same builder', func
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
 
-    $qb = QueryBuilder::for($model);
+    $qb = QueryKitBuilder::for($model);
 
     expect($qb->builder())->toBe($builder);
 });
@@ -28,7 +28,7 @@ it('withPagination returns a new immutable instance', function () {
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
 
-    $qb1 = QueryBuilder::for($model);
+    $qb1 = QueryKitBuilder::for($model);
     $qb2 = $qb1->withPagination(page: 2, perPage: 10);
 
     expect($qb2)->not->toBe($qb1);
@@ -67,7 +67,7 @@ it('withCriteria + addCriteria are applied in order when materializing toCollect
     $rows = new Collection([1, 2, 3]);
     $qbC->shouldReceive('get')->once()->andReturn($rows);
 
-    $out = QueryBuilder::for($model)
+    $out = QueryKitBuilder::for($model)
         ->withCriteria($c1)
         ->addCriteria($c2)
         ->toCollection();
@@ -83,7 +83,7 @@ it('toModel() returns the first model', function () {
     $found = Mockery::mock(Model::class);
     $builder->shouldReceive('first')->once()->andReturn($found);
 
-    $out = QueryBuilder::for($model)->toModel();
+    $out = QueryKitBuilder::for($model)->toModel();
 
     expect($out)->toBe($found);
 });
@@ -96,7 +96,7 @@ it('toCollection() returns a Collection', function () {
     $rows = collect([['id' => 1]]);
     $builder->shouldReceive('get')->once()->andReturn($rows);
 
-    $out = QueryBuilder::for($model)->toCollection();
+    $out = QueryKitBuilder::for($model)->toCollection();
 
     expect($out)->toBeInstanceOf(Collection::class)->and($out)->toBe($rows);
 });
@@ -117,7 +117,7 @@ it('toPaginated() calls paginate(perPage, page) and returns paginator', function
         })
         ->andReturn($paginator);
 
-    $out = QueryBuilder::for($model)
+    $out = QueryKitBuilder::for($model)
         ->withPagination(page: 2, perPage: 10)
         ->toPaginated();
 
@@ -129,7 +129,7 @@ it('toPaginated() throws when pagination is not configured', function () {
     $model = Mockery::mock(Model::class);
     $model->shouldReceive('newQuery')->once()->andReturn($builder);
 
-    QueryBuilder::for($model)->toPaginated();
+    QueryKitBuilder::for($model)->toPaginated();
 })->throws(QueryBuilderException::class, 'Pagination fields are not initialized');
 
 it('toResourceCollection() wraps a collection result into the given ResourceCollection', function () {
@@ -140,7 +140,7 @@ it('toResourceCollection() wraps a collection result into the given ResourceColl
     $rows = collect([['id' => 1], ['id' => 2]]);
     $builder->shouldReceive('get')->once()->andReturn($rows);
 
-    $out = QueryBuilder::for($model)->toResourceCollection(QB_DummyResourceCollection::class);
+    $out = QueryKitBuilder::for($model)->toResourceCollection(QB_DummyResourceCollection::class);
 
     expect($out)->toBeInstanceOf(QB_DummyResourceCollection::class);
 });
@@ -157,7 +157,7 @@ it('toResourceCollection() wraps a paginator result when pagination is configure
         ->once()
         ->andReturn($paginator);
 
-    $out = QueryBuilder::for($model)
+    $out = QueryKitBuilder::for($model)
         ->withPagination(page: 1, perPage: 5)
         ->toResourceCollection(QB_DummyResourceCollection::class);
 
@@ -172,7 +172,7 @@ it('toJsonResource() wraps the first model into the given JsonResource', functio
     $found = Mockery::mock(Model::class);
     $builder->shouldReceive('first')->once()->andReturn($found);
 
-    $out = QueryBuilder::for($model)->toJsonResource(QB_DummyJsonResource::class);
+    $out = QueryKitBuilder::for($model)->toJsonResource(QB_DummyJsonResource::class);
 
     expect($out)->toBeInstanceOf(QB_DummyJsonResource::class);
 });
