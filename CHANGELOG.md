@@ -1,2 +1,54 @@
-# Changelog
+## v1.0.0 - 2025-08-29
 
+### Other
+- Feature/query kit builer end to end test
+- Feature/add changelog, and release actions
+- feat: add actions (#1)
+- docs: update readme
+- docs: update readme
+- docs: update readme
+- feat: check criteria and inject model if needed
+- feat: change interface implemented
+- feat: add test for ModelAwareCriteriaInterface
+- feat: add interface
+- fix: tests command
+- feat: check if command has sort for qualifyClass
+- fix: remove criteria from stubs
+- feat: add readonly stubs
+- docs: update readme
+- docs: fix import
+- docs: update readme
+- docs: add changelog, update readme
+- docs: fix use
+- docs: fix typo
+- feat: add execute command test
+- feat: add method
+- refactor: clean command
+- fix: stub path
+- feat: add provider, and tests
+- fix: remove class to use stubs
+- feat: add facade, and tests
+- docs: update contributing
+- docs: update readme
+- docs: update readme
+- feat: add QueryBuilder, and tests
+- feat: remove mockery::close
+- feat: add handlers, and tests
+- feat: add stub for sort, add option command
+- feat: add docblocks
+- feat: add query service, and tests
+- feat: remove fila and directory
+- chore: update readme
+- feat: add stub, command, and tests
+- feat: add active
+- feat: add scripts
+- feat: add VO, and test
+- fix: lint, run pint
+- feat: add sort criteria, and tests
+- feat: add criteria, and tests
+- fix: run pint
+- feat: add exceptions, and tests
+- fix: run pint
+- feat: add contracts and tests
+- chore: update phpstan.neon
+- chore: update readme

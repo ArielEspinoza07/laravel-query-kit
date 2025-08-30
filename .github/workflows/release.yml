@@ -7,6 +7,9 @@ on:
         description: 'New release version (e.g. v1.0.0)'
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,21 +19,41 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0           # recomendable para tags/CHANGES
+          persist-credentials: true
 
-      - name: 🏷️ Create Git tag
+      - name: 🧭 Configure git identity
         run: |
-          git tag -a "${{ github.event.inputs.version }}" -m "Release ${{ github.event.inputs.version }}"
-          git push origin HEAD
-          git push origin "${{ github.event.inputs.version }}"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 🏷️ Create & push tag
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          # crea/actualiza tag anotado
+          git tag -a "$VERSION" -m "Release $VERSION" || git tag -d "$VERSION" && git tag -a "$VERSION" -m "Release $VERSION"
+          # empuja SOLO el tag (no la rama)
+          git push origin "refs/tags/$VERSION"
 
       - name: 📖 Extract changelog for tag
         id: extract_changelog
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
-          version="${{ github.event.inputs.version }}"
-          changelog=$(awk "/^## ${version} /,/^## /" CHANGELOG.md | sed '1d;$d')
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$changelog" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Extract the section of the CHANGELOG that starts at "## vX.Y.Z"
+          # If it is the last section and there is no "##" following it, this fallback avoids going empty
+          if awk "/^## ${VERSION} /,/^## /" CHANGELOG.md | sed '1d;$d' > part.md && [ -s part.md ]; then
+            :
+          else
+          # takes from version header to EOF (without trimming last line)
+            awk "/^## ${VERSION} /{flag=1} flag{print}" CHANGELOG.md > part.md
+          fi
+          {
+            echo "body<<'EOF'"
+            cat part.md
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: 🚀 Create GitHub Release
         uses: softprops/action-gh-release@v1
