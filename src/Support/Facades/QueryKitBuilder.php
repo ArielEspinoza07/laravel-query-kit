@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaravelQueryKit\Support\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use LaravelQueryKit\Contracts\CriteriaInterface;
 
 /**
  * @method static \LaravelQueryKit\QueryBuilder for(\Illuminate\Database\Eloquent\Model $model)
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \LaravelQueryKit\QueryBuilder setCriteria(array $criteria)
  * @method static \LaravelQueryKit\QueryBuilder addCriteria(\LaravelQueryKit\Contracts\CriteriaInterface $c)
  * @method static \Illuminate\Contracts\Database\Query\Builder builder()
+ * @method static array<CriteriaInterface> criteria()
  * @method static \Illuminate\Database\Eloquent\Model|null toModel()
  * @method static \Illuminate\Support\Collection toCollection()
  * @method static \Illuminate\Contracts\Pagination\LengthAwarePaginator toPaginated()
