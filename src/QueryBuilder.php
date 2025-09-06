@@ -138,6 +138,16 @@ final readonly class QueryBuilder
     }
 
     /**
+     * Get a snapshot of the current criteria queue (in order).
+     *
+     * @return array<CriteriaInterface>
+     */
+    public function criteria(): array
+    {
+        return $this->service->criteria();
+    }
+
+    /**
      * Materialize the first matching model after applying all criteria.
      *
      * @return Model|null The first model or null if no rows match.

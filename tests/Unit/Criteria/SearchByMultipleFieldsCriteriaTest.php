@@ -7,21 +7,9 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use LaravelQueryKit\Criteria\SearchByMultipleFieldsCriteria;
 
 it('fallback: applies where/orWhere over multiple columns when whereAny is unavailable', function () {
-    $qb = Mockery::mock(Builder::class);
+    $outer = Mockery::mock(Builder::class);
 
-    $qb->shouldReceive('where')
-        ->once()
-        ->with('title', 'like', '%foo%')
-        ->andReturnSelf();
-
-    $qb->shouldReceive('orWhere')
-        ->once()
-        ->with('body', 'like', '%foo%')
-        ->andReturnSelf();
-    $qb->shouldReceive('orWhere')
-        ->once()
-        ->with('summary', 'like', '%foo%')
-        ->andReturnSelf();
+    $inner = Mockery::mock(Builder::class);
 
     $criteria = new SearchByMultipleFieldsCriteria(
         ['title', 'body', 'summary'],
@@ -29,9 +17,33 @@ it('fallback: applies where/orWhere over multiple columns when whereAny is unava
         'like'
     );
 
-    $res = $criteria->apply($qb);
+    $outer->shouldReceive('where')
+        ->once()
+        ->with(Mockery::type('callable'))
+        ->andReturnUsing(function (callable $closure) use ($inner, $outer) {
+            $inner->shouldReceive('where')
+                ->once()
+                ->with('title', 'like', '%foo%')
+                ->andReturn($inner);
 
-    expect($res)->toBe($qb);
+            $inner->shouldReceive('orWhere')
+                ->once()
+                ->with('body', 'like', '%foo%')
+                ->andReturn($inner);
+
+            $inner->shouldReceive('orWhere')
+                ->once()
+                ->with('summary', 'like', '%foo%')
+                ->andReturn($inner);
+
+            $closure($inner);
+
+            return $outer;
+        });
+
+    $result = $criteria->apply($outer);
+
+    expect($result)->toBe($outer);
 });
 
 it('fallback: applies whereAny when is available', function () {
