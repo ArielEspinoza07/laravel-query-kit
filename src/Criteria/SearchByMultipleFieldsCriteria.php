@@ -32,18 +32,18 @@ final readonly class SearchByMultipleFieldsCriteria implements CriteriaInterface
         /** @phpstan-ignore-next-line */
         if (method_exists($builder, 'whereAny')) {
             return $builder->whereAny(
-                columns: $this->columns,
+                columns: $columns,
                 operator: $this->operator,
                 value: $this->value,
             );
         }
 
-        foreach ($this->columns as $i => $col) {
-            $builder = $i === 0
-                ? $builder->where($col, $this->operator, $this->value)
-                : $builder->orWhere($col, $this->operator, $this->value);
-        }
-
-        return $builder;
+        return $builder->where(function (Builder $b) use ($columns) {
+            foreach ($columns as $i => $col) {
+                $b = $i === 0
+                    ? $b->where($col, $this->operator, $this->value)
+                    : $b->orWhere($col, $this->operator, $this->value);
+            }
+        });
     }
 }
